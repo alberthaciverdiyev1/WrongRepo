@@ -188,17 +188,21 @@ namespace Cars.Migrations
 
             modelBuilder.Entity("Cars.Models.VehicleColors", b =>
                 {
-                    b.HasOne("Cars.Models.Colors", null)
+                    b.HasOne("Cars.Models.Colors", "Colors")
                         .WithMany("VehicleColors")
                         .HasForeignKey("ColorsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cars.Models.Vehicles", null)
+                    b.HasOne("Cars.Models.Vehicles", "Vehicles")
                         .WithMany("VehicleColors")
                         .HasForeignKey("VehiclesID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Colors");
+
+                    b.Navigation("Vehicles");
                 });
 
             modelBuilder.Entity("Cars.Models.VehicleTags", b =>

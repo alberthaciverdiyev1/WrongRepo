@@ -1,5 +1,6 @@
-﻿@using Cars.ViewModels;
-@model HomeVM
+﻿@{
+    int count = 0;
+}
 <!-- Begin Main Content Area  -->
 <main class="main-content">
     <div class="breadcrumb-area breadcrumb-height"
@@ -20,70 +21,42 @@
             </div>
         </div>
     </div>
-    <div class="single-product-area section-space-top-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="single-product-img">
-                        <div class="swiper-container single-product-slider">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <a href="~/assets/images/website-images/1-1-570x633.jpg"
-                                       class="single-img gallery-popup">
-                                        <img class="img-full"
-                                             src="~/assets/images/website-images/1-1-570x633.jpg"
-                                             alt="Product Image" />
-                                    </a>
+    <div>
+        <div class="single-product-area section-space-top-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="single-product-img">
+                            <div class="swiper-container single-product-slider">
+                                <div class="swiper-wrapper">
+                                    @foreach (Images item in Model.Images)
+                                    {
+                                        <div class="swiper-slide">
+                                            <a href="@item.ImageURL"
+                                               class="single-img gallery-popup">
+                                                <img class="img-full"
+                                                     src="@item.ImageURL"
+                                                     alt="Product Image" />
+                                            </a>
+                                        </div>
+                                    }
                                 </div>
-                                <div class="swiper-slide">
-                                    <a href="~/assets/images/website-images/1-2-570x633.jpg"
-                                       class="single-img gallery-popup">
-                                        <img class="img-full"
-                                             src="~/assets/images/website-images/1-2-570x633.jpg"
-                                             alt="Product Image" />
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="~/assets/images/website-images/1-3-570x633.jpg"
-                                       class="single-img gallery-popup">
-                                        <img class="img-full"
-                                             src="~/assets/images/website-images/1-3-570x633.jpg"
-                                             alt="Product Image" />
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="~/assets/images/website-images/1-4-570x633.jpg"
-                                       class="single-img gallery-popup">
-                                        <img class="img-full"
-                                             src="~/assets/images/website-images/1-4-570x633.jpg"
-                                             alt="Product Image" />
-                                    </a>
-                                </div>
+
+
+
                             </div>
                         </div>
                         <div class="thumbs-arrow-holder">
                             <div class="swiper-container single-product-thumbs">
                                 <div class="swiper-wrapper">
-                                    <a href="#" class="swiper-slide">
-                                        <img class="img-full"
-                                             src="~/assets/images/website-images/1-1-570x633.jpg"
-                                             alt="Product Thumnail" />
-                                    </a>
-                                    <a href="#" class="swiper-slide">
-                                        <img class="img-full"
-                                             src="~/assets/images/website-images/1-2-570x633.jpg"
-                                             alt="Product Thumnail" />
-                                    </a>
-                                    <a href="#" class="swiper-slide">
-                                        <img class="img-full"
-                                             src="~/assets/images/website-images/1-3-570x633.jpg"
-                                             alt="Product Thumnail" />
-                                    </a>
-                                    <a href="#" class="swiper-slide">
-                                        <img class="img-full"
-                                             src="~/assets/images/website-images/1-4-570x633.jpg"
-                                             alt="Product Thumnail" />
-                                    </a>
+                                    @foreach (Images items in Model.Images)
+                                    {
+                                        <a href="#" class="swiper-slide">
+                                            <img class="img-full"
+                                                 src="@items.ImageURL"
+                                                 alt="Product Thumnail" />
+                                        </a>
+                                    }
                                 </div>
                                 <!-- Add Arrows -->
                                 <div class="thumbs-button-wrap d-none d-md-block">
@@ -100,9 +73,9 @@
                 </div>
                 <div class="col-lg-6 pt-5 pt-lg-0">
                     <div class="single-product-content">
-                        <h2 class="title">American Marigold</h2>
+                        <h2 class="title">@Model.Name</h2>
                         <div class="price-box">
-                            <span class="new-price">$23.45</span>
+                            <span class="new-price">$@Model.Price</span>
                         </div>
                         <div class="rating-box-wrap pb-4">
                             <div class="rating-box">
@@ -187,31 +160,48 @@
                             </li>
                         </ul>
                         <div class="product-category">
-                            <span class="title">SKU:</span>
+                            <span class="title">Engine:</span>
                             <ul>
                                 <li>
-                                    <a href="#">Ch-256xl</a>
+                                    <a href="#">@Model.Engine</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="product-category">
-                            <span class="title">Categories :</span>
+                            <span class="title">Body Type :</span>
                             <ul>
                                 <li>
-                                    <a href="#">Office,</a>
+                                    <a href="#">@Model.BodyType.Body</a>
+
                                 </li>
-                                <li>
-                                    <a href="#">Home</a>
-                                </li>
+
                             </ul>
                         </div>
                         <div class="product-category product-tags">
                             <span class="title">Tags :</span>
                             <ul>
                                 <li>
-                                
+                                    @foreach (VehicleTags item in Model.VehicleTags)
+                                    {
+                                        count++;
+
+                                        <a href="#">@item.Tags.TagName@(Model.VehicleTags.Count == count ? "" : ",")</a>
+
+                                    }
                                 </li>
                             </ul>
+
+                        </div> <div class="product-category product-tags">
+                            <span class="title">Color :</span>
+                            <ul>
+                                <li>
+                                    @foreach (VehicleColors item in Model.VehicleColors)
+                                    {
+                                        <a href="#">@item.Colors.Color</a>
+                                    }
+                                </li>
+                            </ul>
+
                         </div>
                         <div class="product-category social-link align-items-center pb-0">
                             <span class="title pe-3">Share:</span>

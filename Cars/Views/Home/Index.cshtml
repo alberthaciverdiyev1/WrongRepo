@@ -1,6 +1,4 @@
-﻿@using Cars.Models;
-@using Cars.ViewModels;
- @model HomeVM
+﻿
   <!-- Begin Slider Area -->
       <div class="slider-area">
         <!-- Main Slider -->
@@ -211,17 +209,17 @@
                   aria-labelledby="featured-tab"
                 >
                   <div class="product-item-wrap row">
-                            @foreach (Images item in Model.Images)
+                            @foreach (Vehicles item in ViewData["Vehicles"] as List<Vehicles>)
                             {
                                 <div class="col-xl-3 col-md-4 col-sm-6">
                                     <div class="product-item">
                                         <div class="product-img">
-                                            <a href="shop.html">
+                                            <a asp-controller="home" asp-action="detail" asp-route-id="@item.Id" >
                                                 <img class="primary-img"
-                                                     src="~/assets/images/website-images//"
+                                                     src="@(item.Images.FirstOrDefault(p=>p.IsPrimary==true)?.ImageURL)"
                                                      alt="Product Images" />
                                                 <img class="secondary-img"
-                                                     src="~/assets/images/website-images//1-2-270x300.jpg"
+                                                     src="@(item.Images.FirstOrDefault(p=>p.IsPrimary==false)?.ImageURL)"
                                                      alt="Product Images" />
                                             </a>
                                             <div class="product-add-action">
@@ -265,9 +263,9 @@
                                             </div>
                                         </div>
                                         <div class="product-content">
-                                            <a class="product-name" href="shop.html">@item</a>
+                                            <a class="product-name" href="shop.html">@item.Name</a>
                                             <div class="price-box pb-1">
-                                                <span class="new-price">$@item</span>
+                                                <span class="new-price">$@item.Price</span>
                                             </div>
                                             <div class="rating-box">
                                                 <ul>

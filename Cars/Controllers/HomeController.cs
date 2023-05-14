@@ -17,25 +17,35 @@ namespace Cars.Controllers
         }
         public IActionResult Index()
         {
-            List<Vehicles> vehicles=_context.Vehicles.Include(p=>p.Images.Where(pi=>pi.IsPrimary!=null)).ToList();
-            HomeVM homeVM = new HomeVM { 
-            Vehicles = vehicles
 
-            };
+            List<Vehicles> vehicles = _context.Vehicles.Include(p => p.Images).ToList();
+            ViewData["Vehicles"]=vehicles;
 
-
-            return View(homeVM);
+            return View();
         }
 
-        public IActionResult Product(int? Id)
+   
+        public IActionResult Detail(int? Id)
         {
+
+
+
             if (Id == null || Id < 1) return BadRequest();
-            Vehicles product = _context.Vehicles.Include(p => p.VehicleTags).Include(t=>t.Images).First(x => x.Id == Id);
-            if (product == null) return NotFound();
+    
+            var vehicles = _context.Vehicles
+        .Include(p => p.VehicleTags).ThenInclude(v=>v.Tags)
+        .Include(t => t.Images)
+        .Include(b=>b.BodyType)
+        .Include(c=>c.VehicleColors).ThenInclude(v=>v.Colors)
+
+        .FirstOrDefault(v => v.Id == Id);
+         if (vehicles == null) return NotFound();
 
 
-            return View(product);
+            
+            return View(vehicles);
         }
+
 
     }
 }
