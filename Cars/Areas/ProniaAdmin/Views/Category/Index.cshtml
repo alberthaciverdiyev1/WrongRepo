@@ -1,0 +1,63 @@
+﻿@model List<BodyType>
+@{
+    int count = 0;
+}
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Car Categories</h4>
+                   
+                    <a asp-controller="category" asp-action="create" class="btn btn-success">Create Category</a>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Number
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Product Count
+                                    </th>
+                                    <th>
+                                        Setting
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (BodyType item in Model)
+                                {
+                                    count++;
+
+                                    <tr>
+                                        <td class="py-1">
+                                            @count
+                                        </td>
+                                        <td>
+                                            @item.Body
+                                        </td>
+                                        <td>
+                                            @item.Vehicles.Count
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-warning">Update</a>  <a class="btn btn-danger">Delete</a> <a class="btn btn-primary">Info</a>
+                                        </td>
+                                    </tr>
+
+
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
